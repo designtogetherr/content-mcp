@@ -1,0 +1,39 @@
+/**
+ * For more details on how to configure Wrangler, refer to:
+ * https://developers.cloudflare.com/workers/wrangler/configuration/
+ */
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "content-mcp",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-14",
+  "compatibility_flags": ["nodejs_compat"],
+  // Set these for your own site (and the KV namespace id below).
+  "vars": {
+    "GITHUB_OWNER": "your-github-user",
+    "GITHUB_REPO": "your-site-repo",
+    "LIVE_URL": "https://your-site-repo.your-subdomain.workers.dev",
+    "PREVIEW_URL": "https://staging-your-site-repo.your-subdomain.workers.dev"
+  },
+  /**
+	 * Note: Use secrets to store sensitive data.
+	 * https://developers.cloudflare.com/workers/configuration/secrets/
+	 *
+	 * Commands to set secrets:
+	 * npx wrangler secret put GITHUB_CLIENT_ID
+	 * npx wrangler secret put GITHUB_CLIENT_SECRET
+	 * npx wrangler secret put COOKIE_ENCRYPTION_KEY
+	 */
+  "kv_namespaces": [
+    {
+      "binding": "OAUTH_KV",
+      "id": "<your-kv-namespace-id>"
+    }
+  ],
+  "observability": {
+    "enabled": true
+  },
+  "dev": {
+    "port": 8788
+  }
+}
